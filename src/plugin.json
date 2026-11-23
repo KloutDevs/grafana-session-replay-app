@@ -13,9 +13,32 @@
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "screenshots": [],
+    "screenshots": [
+      {
+        "name": "Sessions list",
+        "path": "img/screenshots/sessions.png"
+      },
+      {
+        "name": "Replay with timeline and journey",
+        "path": "img/screenshots/replay.png"
+      }
+    ],
     "version": "%VERSION%",
-    "updated": "%TODAY%"
+    "updated": "%TODAY%",
+    "links": [
+      {
+        "name": "Source",
+        "url": "https://github.com/KloutDevs/grafana-session-replay-app"
+      },
+      {
+        "name": "Report an issue",
+        "url": "https://github.com/KloutDevs/grafana-session-replay-app/issues"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/KloutDevs/grafana-session-replay-app/blob/main/LICENSE"
+      }
+    ]
   },
   "includes": [
     {

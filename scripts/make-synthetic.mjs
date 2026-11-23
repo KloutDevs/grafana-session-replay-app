@@ -11,7 +11,7 @@ import { mkdirSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const outDir = process.argv[2] ?? join(import.meta.dirname, '..', 'tests', 'synthetic');
-const APP = 'quickaction-dashboard-frontend';
+const APP = 'demo-web-app';
 const ORIGIN = 'http://127.0.0.1:5173';
 
 const BROWSER = {

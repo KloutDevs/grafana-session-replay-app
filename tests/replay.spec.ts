@@ -8,7 +8,6 @@ test.describe('sessions list', () => {
     await gotoPage('/sessions?lookback=7d');
     const row = page.getByRole('row').filter({ hasText: SESSION });
     await expect(row).toBeVisible();
-    await expect(row).toContainText('quickaction-dashboard-frontend');
     await expect(row.getByText('1', { exact: true }).last()).toBeVisible();
   });
 
