@@ -2,9 +2,14 @@
 
 A Grafana app plugin that lists and replays browser sessions recorded by
 [Grafana Faro](https://grafana.com/oss/faro/)'s replay instrumentation and stored
-in Loki. It reads the lines in **JSON** (production's shape) or **logfmt** (our
-test stack), and opens a session at a given moment so a dashboard can link
-straight to an error.
+in Loki. It reads the lines in **JSON** or **logfmt**, and opens a session at a
+given moment so a dashboard can link straight to an error.
+
+![Sessions list](https://raw.githubusercontent.com/KloutDevs/grafana-session-replay-app/main/src/img/screenshots/sessions.png)
+
+![Replay with timeline and journey](https://raw.githubusercontent.com/KloutDevs/grafana-session-replay-app/main/src/img/screenshots/replay.png)
+
+The screenshots use synthetic demo data.
 
 - Frontend only. It queries Loki through Grafana (`/api/ds/query`), so datasource
   permissions apply. It stores nothing and writes nothing.
@@ -89,7 +94,7 @@ before pushing them again, or the sessions would be duplicated in Loki.
 the release zip** and generates the admin password and the Faro key
 (`scripts/env.sh secrets`). Then:
 
-1. Serve the QuickAction frontend with replay on, pointing at that Alloy:
+1. Serve a Faro-instrumented web app with replay on, pointing at that Alloy:
    `VITE_FARO_URL=http://127.0.0.1:14347/collect VITE_FARO_API_KEY=<key> VITE_REPLAY_SAMPLE_RATE=1`.
 2. Use the app (or run `node scripts/record-session.mjs`, which records a session on
    the public routes).
@@ -100,7 +105,7 @@ logfmt lines (`format: logfmt`), which is what Alloy's Faro receiver writes by d
 
 ## Install
 
-See [INSTALL.md](INSTALL.md).
+See [INSTALL.md](https://github.com/KloutDevs/grafana-session-replay-app/blob/main/INSTALL.md).
 
 ## Notes
 

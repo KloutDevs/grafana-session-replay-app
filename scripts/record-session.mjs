@@ -1,4 +1,4 @@
-// Records one browsing session of the QuickAction frontend (running with replay on) so there is real
+// Records one browsing session of a Faro-instrumented web app (running with replay on) so there is real
 // data to replay. Needs the frontend served at FRONTEND_URL with VITE_FARO_URL pointing at the Alloy
 // of the environment (see README, "Use it in a separate environment").
 import { chromium } from '@playwright/test';

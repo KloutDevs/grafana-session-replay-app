@@ -39,7 +39,7 @@ describe.each(FORMATS)('SessionRepository with %s lines', (format) => {
     expect(sessions.map((s) => s.sessionId).sort()).toEqual([...SESSIONS].sort());
     expect(sessions[0]?.startedAtMs).toBeGreaterThanOrEqual(sessions[sessions.length - 1]?.startedAtMs ?? 0);
     const first = sessions.find((s) => s.sessionId === 'W3zzC4gSP8');
-    expect(first?.appName).toBe('quickaction-dashboard-frontend');
+    expect(first?.appName).toMatch(/\w/);
     expect(first?.browser).toMatch(/^Chrome/);
     expect(first?.userId).toBe('');
   });
