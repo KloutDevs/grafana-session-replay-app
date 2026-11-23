@@ -1,0 +1,9 @@
+apiVersion: 1
+apps:
+  - type: escalia-sessionreplay-app
+    org_id: 1
+    disabled: false
+    jsonData:
+      lokiUid: loki
+      format: logfmt
+      selector: '{source=~"faro|faro_replay"}'

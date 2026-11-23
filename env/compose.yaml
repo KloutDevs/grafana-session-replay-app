@@ -1,0 +1,53 @@
+# A separate environment to use the plugin with real Faro data:
+#   browser (Faro + replay) -> Alloy (faro.receiver) -> Loki -> Grafana + this plugin
+# Everything listens on 127.0.0.1 only. Start it with `npm run env:up`.
+name: replay-env
+services:
+  grafana:
+    image: 'grafana/grafana:13.3.1@sha256:0615ec4fbd4072004b7d86b46ded63013a74b7d6eb1119273dd89e8fa25c13cf'
+    ports: ['127.0.0.1:14000:3000']
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: '${ENV_ADMIN_PASSWORD:?run npm run env:up}'
+      GF_SERVER_ROOT_URL: 'http://127.0.0.1:14000/'
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: 'escalia-sessionreplay-app'
+    volumes:
+      - 'grafana-data:/var/lib/grafana'
+      # The plugin, extracted from the release zip by `npm run env:up`.
+      - './plugins/escalia-sessionreplay-app:/var/lib/grafana/plugins/escalia-sessionreplay-app:ro'
+      - './provisioning:/etc/grafana/provisioning:ro'
+    depends_on: [loki]
+    healthcheck:
+      test: ['CMD', 'curl', '-fsS', 'http://127.0.0.1:3000/api/health']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+  loki:
+    image: 'grafana/loki:3.6.22@sha256:4cf4ceb20e88b0543c88b541a71797c22a46eade04dd588dcdebf9f2b9c36063'
+    command: ['-config.file=/etc/loki/config.yaml']
+    ports: ['127.0.0.1:14100:3100']
+    volumes:
+      - 'loki-data:/loki'
+      - './loki.yaml:/etc/loki/config.yaml:ro'
+  alloy:
+    image: 'grafana/alloy:v1.22.0@sha256:9acc2529bc1edb7f5b2bd801dd8334ebc80c158e3a9e5526ecd7c9a273d43189'
+    command:
+      [
+        'run',
+        '--server.http.listen-addr=0.0.0.0:12345',
+        '--storage.path=/var/lib/alloy/data',
+        '/etc/alloy/config.alloy',
+      ]
+    ports: ['127.0.0.1:14347:12347']
+    environment:
+      FARO_API_KEY: '${ENV_FARO_API_KEY:?run npm run env:up}'
+    depends_on: [loki]
+    volumes:
+      - 'alloy-data:/var/lib/alloy/data'
+      - './alloy/config.alloy:/etc/alloy/config.alloy:ro'
+volumes:
+  grafana-data:
+  loki-data:
+  alloy-data:
