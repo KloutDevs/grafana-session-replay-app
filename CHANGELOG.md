@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.3
 
 - Catalog readiness: screenshots, source and issue links in `plugin.json`, absolute README links, filled-in license notice.
 - Generic demo app name in the synthetic sessions.
